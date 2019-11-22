@@ -2,6 +2,7 @@
 
 
 import React, { useState, useEffect } from 'react'
+import Counter from '../components/Counter'
 import './Home.css'
 
 
@@ -40,15 +41,8 @@ import './Home.css'
 
 class Home extends React.Component {
 
-  constructor(props) {
-    super(props)
-
-    this.state = {
-      message: 'Super Message!!!!',
-      count: 0
-    }
-
-    this.decrement = this.decrement.bind(this)
+  state = {
+    message: 'I am just a message'
   }
 
   componentDidMount() {
@@ -57,28 +51,24 @@ class Home extends React.Component {
     }, 1000)
   }
 
-  increment = () => {
-    const { count } = this.state
-    this.setState({count: count + 1})
+  displayMessage = (type, count) => {
+    if (type === 'increment') {
+      alert(`Your number was increment! Current value: ${count}`)
+      return
+    }
+
+    alert(`Your number was decremented! Current value: ${count}`)
   }
 
-  decrement() {
-    const { count } = this.state
-    this.setState({count: count - 1})
-  }
-
-  // lifecycle function
   render() {
-    const { message, count } = this.state
+    const { message } = this.state
     return (
       <div className="container">
         <h1>I am Home Page</h1>
         <p>{message}</p>
-        <button onClick={this.increment}>Increment</button>
-         <div className="counter"> {count} </div>
-        { /* <button onClick={() => this.decrement()}>Decrement</button> */ }
-        { /* <button onClick={this.decrement.bind(this)}>Decrement</button> */ }
-         <button onClick={this.decrement}>Decrement</button>
+        <Counter 
+          onChange={this.displayMessage}
+          title={'I am counter Component!'}/>
       </div>
     )
   }
