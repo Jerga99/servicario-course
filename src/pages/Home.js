@@ -42,7 +42,8 @@ import './Home.css'
 class Home extends React.Component {
 
   state = {
-    message: 'I am just a message'
+    message: 'I am just a message',
+    testNumber: 99
   }
 
   componentDidMount() {
@@ -53,20 +54,22 @@ class Home extends React.Component {
 
   displayMessage = (type, count) => {
     if (type === 'increment') {
-      alert(`Your number was increment! Current value: ${count}`)
+      // alert(`Your number was increment! Current value: ${count}`)
       return
     }
 
-    alert(`Your number was decremented! Current value: ${count}`)
+    // alert(`Your number was decremented! Current value: ${count}`)
   }
 
   render() {
-    const { message } = this.state
+    const { message, testNumber } = this.state
     return (
       <div className="container">
         <h1>I am Home Page</h1>
         <p>{message}</p>
+        <button onClick={() => this.setState({testNumber: testNumber + 1})}>Testing Increment</button>
         <Counter 
+          testNumber={testNumber}
           onChange={this.displayMessage}
           title={'I am counter Component!'}/>
       </div>
