@@ -1,16 +1,22 @@
 /* eslint jsx-a11y/anchor-is-valid: 0 */
 
 import React from 'react'
+import { Link } from 'react-router-dom'
 
-
-const Navbar = () => {
+const Navbar = (props) => {
   return (
-    <nav className="navbar is-fresh is-transparent no-shadow" role="navigation" aria-label="main navigation">
+    <nav 
+      id={props.id || ''}
+      className="navbar is-fresh is-transparent no-shadow" 
+      role="navigation" 
+      aria-label="main navigation">
       <div className="container">
         <div className="navbar-brand">
-          <a className="navbar-item" href="https://cssninja.io">
-             <div className="title">Servicio</div>
-          </a>
+          <Link 
+            to="/"
+            className="navbar-item">
+             <div className="title">Servicario</div>
+          </Link>
 
           <a className="navbar-item is-hidden-desktop is-hidden-tablet">
             <div id="menu-icon-wrapper" className="menu-icon-wrapper" style={{visibility: 'visible'}}>
@@ -45,12 +51,21 @@ const Navbar = () => {
           </div>
 
           <div className="navbar-end">
-            <a href="#" className="navbar-item is-secondary">
-                Features
-            </a>
-            <a href="#" className="navbar-item is-secondary">
-                Pricing
-            </a>
+            <Link 
+              to="/" 
+              className="navbar-item is-secondary">
+                Home
+            </Link>
+            <Link 
+              to="/services" 
+              className="navbar-item is-secondary">
+                Services
+            </Link>
+            <Link 
+              to="/faq" 
+              className="navbar-item is-secondary">
+                Faq
+            </Link>
             <div className="navbar-item has-dropdown is-hoverable">
               <a className="navbar-link">
                   Dropdown
@@ -68,14 +83,18 @@ const Navbar = () => {
                 </a>
               </div>
             </div>
-            <a href="#" className="navbar-item is-secondary modal-trigger" data-modal="auth-modal">
-                Log in
-            </a>
-            <a className="navbar-item">
+            <Link
+              to="/login"
+              className="navbar-item is-secondary modal-trigger" data-modal="auth-modal">
+                Login
+            </Link>
+            <Link 
+              to="/register"
+              className="navbar-item">
               <span className="button signup-button rounded secondary-btn raised">
-                  Sign up
+                  Register
               </span>
-            </a>
+            </Link>
           </div>
         </div>
       </div>
