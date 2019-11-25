@@ -1,7 +1,7 @@
 /* eslint jsx-a11y/anchor-is-valid: 0 */
 
 import React from 'react'
-
+import { Link } from 'react-router-dom'
 
 const ServiceItem = ({service}) => {
 
@@ -27,7 +27,9 @@ const ServiceItem = ({service}) => {
            <p>{shortText(service.description)}</p>
         </div>
         <div className="card-action">
-           <a href="#" className="button btn-align-md accent-btn raised">Learn More</a>
+           <Link 
+              to={`/services/${service.id}`}
+              className="button btn-align-md accent-btn raised">Learn More</Link>
         </div>
       </div>
     </div>
