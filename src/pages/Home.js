@@ -5,7 +5,7 @@ import { connect } from 'react-redux' // HOC
 import Hero from 'components/Hero'
 import ServiceItem from 'components/service/ServiceItem'
 
-import { getServices } from 'store'
+import { fetchServices } from 'actions'
 
 class Home extends React.Component {
 
@@ -14,8 +14,7 @@ class Home extends React.Component {
   }
 
   componentDidMount() {
-    const services = getServices()
-    this.setState({services})
+    this.props.dispatch(fetchServices())
   }
 
   renderServices = (services) =>
@@ -23,8 +22,7 @@ class Home extends React.Component {
   
 
   render() {
-    const { services } = this.state
-    const { testingData, testingNumber } = this.props.test
+    const { services } = this.props
     return (
       <div>
         <Hero />
@@ -48,7 +46,7 @@ class Home extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({test: state.service})
+const mapStateToProps = state => ({services: state.service.items})
     
 export default connect(mapStateToProps)(Home)
 
