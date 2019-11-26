@@ -1,5 +1,5 @@
 
-import { FETCH_SERVICES_SUCCESS } from 'types'
+import { FETCH_SERVICES_SUCCESS, FETCH_SERVICE_SUCCESS } from 'types'
 
 import db from 'db'
 
@@ -12,6 +12,19 @@ export const fetchServices = () => {
       return {
         type: FETCH_SERVICES_SUCCESS,
         services
+      }
+    })
+}
+
+export const fetchServiceById = serviceId => {
+  return db
+    .collection('services')
+    .doc(serviceId)
+    .get()
+    .then(snapshot => {
+      return {
+        type: FETCH_SERVICE_SUCCESS,
+        service: {id: snapshot.id, ...snapshot.data()}
       }
     })
 }

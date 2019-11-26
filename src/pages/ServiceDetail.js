@@ -1,45 +1,45 @@
 
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
+import { connect } from 'react-redux'
+import { fetchServiceById } from 'actions'
 
-const ServiceDetail = () => {
+const ServiceDetail = props => {
 
   const { serviceId } = useParams()
+  const { dispatch } = props
 
+  useEffect(() => {
+    dispatch(fetchServiceById(serviceId))
+  }, [serviceId, dispatch])
+
+
+  const { service } = props
 
   return (
-    <section class="hero is-fullheight is-default is-bold">
-      <div class="hero-body">
-        <div class="container has-text-centered">
-          <div class="columns is-vcentered">
-            <div class="column is-5">
-              <figure class="image is-4by3">
-                 <img src="" alt="Description" />
+    <section className="hero is-fullheight is-default is-bold">
+      <div className="hero-body">
+        <div className="container has-text-centered">
+          <div className="columns is-vcentered">
+            <div className="column is-5">
+              <figure className="image is-4by3">
+                 <img src={service.image} alt="Description" />
               </figure>
             </div>
-            <div class="column is-6 is-offset-1">
-              <h1 class="title is-2">
-                  Hardcoded Title
+            <div className="column is-6 is-offset-1">
+              <h1 className="title is-2">
+                  {service.title}
               </h1>
-              <h2 class="subtitle is-4">
-                  Hardcoded Description
+              <h2 className="subtitle is-4">
+                  {service.description}
               </h2>
               <br />
-              <p class="has-text-centered">
-                <a class="button is-medium is-info is-outlined">
+              <p className="has-text-centered">
+                <button className="button is-medium is-info is-outlined">
                   Learn more
-                </a>
+                </button>
               </p>
             </div>
-          </div>
-        </div>
-      </div>
-      <div class="hero-foot">
-        <div class="container">
-          <div class="tabs is-centered">
-            <ul>
-              <li><a>And this is the bottom</a></li>
-            </ul>
           </div>
         </div>
       </div>
@@ -47,4 +47,9 @@ const ServiceDetail = () => {
   )
 }
 
-export default ServiceDetail
+const mapStateToProps = state => ({service: state.selectedService.item})
+
+export default connect(mapStateToProps)(ServiceDetail)
+
+
+
