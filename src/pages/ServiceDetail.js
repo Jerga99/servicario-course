@@ -18,8 +18,7 @@ const ServiceDetail = props => {
 
   const { service } = props
 
-  if (serviceId !== service.id) { return <Spinner /> }
-  if (isFetching && !service.id) { return <Spinner /> }
+  if (isFetching || serviceId !== service.id) { return <Spinner /> }
 
   return (
     <section className="hero is-fullheight is-default is-bold">
