@@ -1,44 +1,22 @@
 
-import { createStore } from 'redux'
+import { createStore, applyMiddleware, compose } from 'redux'
 import serviceApp from 'reducers'
 
-
-const logger = store => nextDispatch => action => {
-  console.group(action.type)
-  console.log('%c prev state', 'color: gray', store.getState())
-  console.log('%c action', 'color: blue', action)
-  const returnValue = nextDispatch(action)
-  console.log('%c next state', 'color: green', store.getState())
-  console.groupEnd(action.type)
-  return returnValue
-}
-  
-const thunk = store => nextDispatch => action => {
-  if (typeof action === 'function') {
-    return action(store.dispatch, store.getState)
-  } else {
-    return nextDispatch(action)
-  }
-}
-  
-const applyMiddlewares = (store, middlewares) => {
-  middlewares.slice().reverse().forEach(middleware => {
-    store.dispatch = middleware(store)(store.dispatch)
-  })
-}
-
+import thunk from 'redux-thunk'
+import logger from 'redux-logger'
 
 const initStore = () => {
   const middlewares = [thunk]
- 
-  const browserSupport = window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-  const store = createStore(serviceApp, browserSupport)
-
+  const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION__COMPOSE__ || compose
+  
   if (process.env.NODE_ENV !== 'production') {
     middlewares.push(logger)
   }
 
-  applyMiddlewares(store, middlewares)
+  const store = createStore(
+    serviceApp, 
+    composeEnhancers(applyMiddleware(...middlewares))
+  )
 
   return store
 }
