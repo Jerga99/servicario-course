@@ -4,6 +4,8 @@
 import React from 'react'
 import useForm from 'react-hook-form'
 
+import { isValidImage } from 'helpers/validators'
+
 
 const RegisterForm = () => {
   
@@ -49,7 +51,7 @@ const RegisterForm = () => {
       </div>
       <div className="field">
         <div className="control">
-          <input ref={register({required: true, pattern: /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/gm})}
+          <input ref={register({required: true, validate: {isValidImage}})}
                  name="avatar"
                  className="input is-large"
                  type="text"
@@ -57,7 +59,7 @@ const RegisterForm = () => {
           { errors.avatar &&
             <div className="form-error">
               { errors.avatar.type === 'required' && <span className="help is-danger">Avatar is required</span> }
-              { errors.avatar.type === 'pattern' && <span className="help is-danger">Avatar url is not valid</span> }
+              { errors.avatar.type === 'isValidImage' && <span className="help is-danger">Avatar extenstion is not valid</span> }
             </div>
           }
         </div>
