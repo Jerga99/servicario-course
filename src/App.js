@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { Provider } from 'react-redux'
+import { ToastProvider } from 'react-toast-notifications'
 import initStore from './store'
 
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
@@ -21,34 +22,36 @@ const store = initStore()
 function App() {
   return (
     <Provider store={store}>
-      <Router>
-        <Navbar />
-        <Navbar id="navbar-clone" />
-        <Sidebar />
-        <Switch>
-          <Route path="/register">
-            <RegisterPage />
-          </Route>
-          <Route path="/login">
-            <LoginPage />
-          </Route>
-          <Route path="/services/:serviceId">
-            <ServiceDetailPage />
-          </Route>
-          <Route path="/services">
-            <ServicesPage />
-          </Route>
-          <Route path="/profile">
-            <ProfilePage />
-          </Route>
-          <Route path="/faq">
-            <FaqPage />
-          </Route>
-          <Route path="/">
-            <HomePage />
-          </Route>
-        </Switch>
-      </Router>
+      <ToastProvider>
+        <Router>
+          <Navbar />
+          <Navbar id="navbar-clone" />
+          <Sidebar />
+          <Switch>
+            <Route path="/register">
+              <RegisterPage />
+            </Route>
+            <Route path="/login">
+              <LoginPage />
+            </Route>
+            <Route path="/services/:serviceId">
+              <ServiceDetailPage />
+            </Route>
+            <Route path="/services">
+              <ServicesPage />
+            </Route>
+            <Route path="/profile">
+              <ProfilePage />
+            </Route>
+            <Route path="/faq">
+              <FaqPage />
+            </Route>
+            <Route path="/">
+              <HomePage />
+            </Route>
+          </Switch>
+        </Router>
+      </ToastProvider>
     </Provider>
   );
 }
