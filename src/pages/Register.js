@@ -1,9 +1,18 @@
 /* eslint jsx-a11y/anchor-is-valid: 0 */
 
 import React from 'react'
+import { connect } from 'react-redux'
 import RegisterForm from 'components/auth/RegisterForm'
+import { register } from 'actions'
 
-const Register = () => {
+const Register = (props) => {
+
+  const registerUser = (userData) => {
+    props.dispatch(register(userData))
+      .then((_) => {
+      }, (errorMessage) => {
+      })
+  }
 
   return (
     <div className="auth-page">
@@ -15,7 +24,7 @@ const Register = () => {
             <figure className="avatar">
               <img src="https://placehold.it/128x128" alt="Company Logo" />
             </figure>
-            <RegisterForm />
+            <RegisterForm onRegister={registerUser} />
           </div>
           <p className="has-text-grey">
             <a>Sign In With Google</a>&nbsp;
@@ -28,4 +37,11 @@ const Register = () => {
   )
 }
 
-export default Register
+export default connect()(Register)
+
+
+
+
+
+
+

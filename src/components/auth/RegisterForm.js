@@ -7,17 +7,12 @@ import useForm from 'react-hook-form'
 import { isValidImage, isValidUrl, sameAs } from 'helpers/validators'
 
 
-const RegisterForm = () => {
+const RegisterForm = (props) => {
   
   const { register, handleSubmit, errors, getValues } = useForm()
 
-  const getFormData = data => {
-    console.log('SUBMITING DATA')
-    console.log(data)
-  }
-
   return (
-    <form onSubmit={handleSubmit(getFormData)}>
+    <form onSubmit={handleSubmit(props.onRegister)}>
       <div className="field">
         <div className="control">
           <input ref={register({required: true, pattern: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/})}
