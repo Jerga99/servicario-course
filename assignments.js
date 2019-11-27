@@ -12,3 +12,7 @@
 3. Dispatch action in useEffect of ServiceDetail page
 4. Get data from state with connect
 5. Display service informations instead of hardcoded ones
+
+// Display login data
+1. On submit of login form console.log email and password
+2. Optional: create validation
