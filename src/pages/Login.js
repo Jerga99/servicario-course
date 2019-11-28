@@ -4,6 +4,7 @@ import React, { useState } from 'react'
 import useForm from 'react-hook-form'
 import { useToasts } from 'react-toast-notifications'
 import { Redirect } from 'react-router-dom'
+import onlyGuest from 'components/hoc/onlyGuest'
 
 import { login } from 'actions'
 
@@ -71,4 +72,13 @@ const Login = () => {
   )
 }
 
-export default Login
+export default onlyGuest(Login)
+
+
+
+
+
+
+
+
+
