@@ -17,6 +17,7 @@ class ServiceApp extends React.Component {
   renderApplication = auth => 
     <React.Fragment>
       <Navbar 
+        loadFresh
         id="navbar-main"
         logout={this.handleLogout}
         auth={auth}/>
