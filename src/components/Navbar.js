@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom'
 const Navbar = props => {
 
   const { user, isAuth } = props.auth
+  const { logout } = props
   return (
     <nav 
       id={props.id || ''}
@@ -107,13 +108,13 @@ const Navbar = props => {
               </React.Fragment>
             }
             { isAuth &&
-              <Link 
-                to="/"
+              <div 
+                onClick={logout}
                 className="navbar-item">
                 <span className="button signup-button is-danger rounded raised">
                     Logout
                 </span>
-              </Link>
+              </div>
             }
           </div>
         </div>
