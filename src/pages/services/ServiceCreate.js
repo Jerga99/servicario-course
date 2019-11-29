@@ -1,9 +1,15 @@
 
 import React, { useState } from 'react'
+import withAuthorization from 'components/hoc/withAuthorization'
+import { Redirect } from 'react-router-dom'
 
 
-const ServiceCreate = () => {
+import { createService } from 'actions'
 
+
+const ServiceCreate = ({auth}) => {
+
+  const [ redirect, setRedirect ] = useState(false)
   const [ serviceForm, setServiceForm ] = useState({
     category: 'mathematics',
     title: '',
@@ -18,8 +24,13 @@ const ServiceCreate = () => {
   }
 
   const handleSubmit = () => {
-    alert(JSON.stringify(serviceForm))
+    const { user } = auth
+    createService(serviceForm, user.uid)
+      .then(() => setRedirect(true))
+      .catch(() => alert('SOME ERROR!'))
   }
+
+  if (redirect) { return <Redirect to="/" />}
 
   return (
     <div className="create-page">
@@ -102,4 +113,11 @@ const ServiceCreate = () => {
   )
 }
 
-export default ServiceCreate
+export default withAuthorization(ServiceCreate)
+
+
+
+
+
+
+
