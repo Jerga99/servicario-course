@@ -22,6 +22,9 @@ export const fetchServices = () => dispatch =>
     )
   )
 
+export const fetchUserServices = userId => 
+   api.fetchUserServices(userId)
+
 
 export const fetchServiceById = serviceId => (dispatch, getState) => {
   const lastService = getState().selectedService.item
