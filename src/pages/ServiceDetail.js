@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import { fetchServiceById } from 'actions'
 
 import Spinner from 'components/Spinner'
+import Modal from 'components/Modal'
 
 const ServiceDetail = props => {
 
@@ -39,9 +40,7 @@ const ServiceDetail = props => {
               </h2>
               <br />
               <p className="has-text-centered">
-                <button className="button is-medium is-info is-outlined">
-                  Learn more
-                </button>
+                <Modal openButtonText="Make an offer"/>
               </p>
             </div>
           </div>
