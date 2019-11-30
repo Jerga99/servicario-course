@@ -35,18 +35,20 @@ export const fetchServiceById = serviceId => (dispatch, getState) => {
   dispatch({type: REQUEST_SERVICE})
   return api
     .fetchServiceById(serviceId)
-    .then(service => dispatch(
-      {
-        type: FETCH_SERVICE_SUCCESS,
-        service
-      }
-    )
+    .then(async service => {
+      // service.user = await api.getUserProfile(service.user)
+      const user = await service.user.get()
+      service.user = user.data()
+      service.user.id = user.id
+
+      dispatch({type: FETCH_SERVICE_SUCCESS, service}
+    )}
   )
 }
 
 export const createService = (newService, userId) => {
   newService.price = parseInt(newService.price, 10)
-  newService.user = userId
+  newService.user = api.createRef('profiles', userId)
 
   return api.createService(newService)
 }

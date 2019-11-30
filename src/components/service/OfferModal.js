@@ -56,7 +56,7 @@ const OfferModal = ({service}) => {
       </div>
       <div className="service-price has-text-centered">
         <div className="service-price-title">
-          Uppon acceptance "Filip Jerga" will charge you:
+          {service.user && `Uppon acceptance ${service.user.fullName}" will charge you:`}
         </div>
         <div className="service-price-value">
           <h1 className="title">{offer.price}$</h1>
