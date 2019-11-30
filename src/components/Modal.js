@@ -31,7 +31,7 @@ const Modal = props => {
           </section>
           <footer className="modal-card-foot">
             <button 
-              onClick={props.onModalSubmit}
+              onClick={() => props.onModalSubmit(() => changeModalState(false))}
               className="button is-success">Save changes</button>
             <button 
               onClick={() => changeModalState(false)}
