@@ -28,3 +28,17 @@ export const changeOfferStatus = (offerId, status) =>
   db.collection('offers')
     .doc(offerId)
     .update({status})
+
+export const markOfferAsInCollaboration = offerId => 
+  db.collection('offers')
+    .doc(offerId)
+    .update({collaborationCreated: true})
+
+
+
+
+
+
+
+
+

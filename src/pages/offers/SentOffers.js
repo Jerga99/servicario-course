@@ -2,6 +2,7 @@
 
 import React from 'react'
 import withAuthorization from 'components/hoc/withAuthorization'
+import { withToastManager } from 'react-toast-notifications';
 import ServiceItem from 'components/service/ServiceItem'
 import { connect } from 'react-redux'
 import { newMessage, newCollaboration } from 'helpers/offers'
@@ -15,12 +16,17 @@ class SentOffers extends React.Component {
   }
 
   createCollaboration = offer => {
-    const { auth: { user }} = this.props
+    const { auth: { user }, toastManager} = this.props
+
     const collaboration = newCollaboration({offer, fromUser: user})
     const message = newMessage({offer, fromUser: user})
 
-    collaborate({collaboration, message})
-      .then(_ => alert('Collaboration was Created!'))
+    this.props.collaborate({collaboration, message})
+      .then(_ => 
+        toastManager.add('Collaboration was Created!', {
+          appearance: 'success',
+          autoDismiss: true })
+      )
   } 
 
   render() {
@@ -56,7 +62,7 @@ class SentOffers extends React.Component {
                       <span className="label">Time:</span> {offer.time} hours
                     </div>
                   </div>
-                  { offer.status === 'accepted' &&
+                  { offer.status === 'accepted' && !offer.collaborationCreated &&
                     <div>
                       <hr />
                       <button 
@@ -76,10 +82,11 @@ class SentOffers extends React.Component {
 }
 
 const mapStateToProps = ({offers}) => ({ offers: offers.sent })
+const SentOffersWithToast = withToastManager(SentOffers)
 
 export default 
   withAuthorization(
-    connect(mapStateToProps)(SentOffers))
+    connect(mapStateToProps, {collaborate})(SentOffersWithToast))
 
 
 
