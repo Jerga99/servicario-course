@@ -35,7 +35,7 @@ class ReceivedOffers extends React.Component {
                   <hr />
                   <div className="service-offer">
                     <div>
-                      <span className="label">From User:</span> {offer.toUser.fullName}
+                      <span className="label">From User:</span> {offer.fromUser.fullName}
                     </div>
                     <div>
                       <span className="label">Note:</span> {offer.note}
