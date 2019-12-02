@@ -5,7 +5,7 @@ import withAuthorization from 'components/hoc/withAuthorization'
 import ServiceItem from 'components/service/ServiceItem'
 import { connect } from 'react-redux'
 import { newMessage, newCollaboration } from 'helpers/offers'
-import { fetchSentOffers } from 'actions'
+import { fetchSentOffers, collaborate } from 'actions'
 
 class SentOffers extends React.Component {
 
@@ -18,6 +18,9 @@ class SentOffers extends React.Component {
     const { auth: { user }} = this.props
     const collaboration = newCollaboration({offer, fromUser: user})
     const message = newMessage({offer, fromUser: user})
+
+    collaborate({collaboration, message})
+      .then(_ => alert('Collaboration was Created!'))
   } 
 
   render() {
