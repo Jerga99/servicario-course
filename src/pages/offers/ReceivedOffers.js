@@ -5,21 +5,21 @@ import withAuthorization from 'components/hoc/withAuthorization'
 import ServiceItem from 'components/service/ServiceItem'
 import { connect } from 'react-redux'
 
-import { fetchReceivedOffers } from 'actions'
+import { fetchReceivedOffers, changeOfferStatus } from 'actions'
 
 class ReceivedOffers extends React.Component {
 
   componentDidMount() {
     const { auth } = this.props
-    this.props.dispatch(fetchReceivedOffers(auth.user.uid))
+    this.props.fetchReceivedOffers(auth.user.uid)
   }
 
-  acceptOffer = offer => {
-    console.log(`Accepting ${(offer)}`)
+  acceptOffer = offerId => {
+    this.props.changeOfferStatus(offerId, 'accepted')
   }
 
-  declineOffer = offer => {
-    console.log(`Declining ${(offer)}`)
+  declineOffer = offerId => {
+    this.props.changeOfferStatus(offerId, 'declined')
   }
 
   statusClass = status => {
@@ -65,10 +65,10 @@ class ReceivedOffers extends React.Component {
                     <div>
                       <hr />
                       <button 
-                        onClick={() => this.acceptOffer(offer)} 
+                        onClick={() => this.acceptOffer(offer.id)} 
                         className="button is-success s-m-r">Accept</button>
                       <button 
-                        onClick={() => this.declineOffer(offer)} 
+                        onClick={() => this.declineOffer(offer.id)} 
                         className="button is-danger">Decline</button>
                     </div>
                   }
@@ -85,9 +85,14 @@ class ReceivedOffers extends React.Component {
 
 const mapStateToProps = ({offers}) => ({ offers: offers.received })
 
+const mapDispatchToProps = () => ({
+  changeOfferStatus,
+  fetchReceivedOffers
+})
+
 export default 
   withAuthorization(
-    connect(mapStateToProps)(ReceivedOffers))
+    connect(mapStateToProps, mapDispatchToProps())(ReceivedOffers))
 
 
 
