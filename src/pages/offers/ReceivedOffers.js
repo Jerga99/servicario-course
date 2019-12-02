@@ -3,6 +3,7 @@
 import React from 'react'
 import withAuthorization from 'components/hoc/withAuthorization'
 import ServiceItem from 'components/service/ServiceItem'
+import { connect } from 'react-redux'
 
 import { fetchReceivedOffers } from 'actions'
 
@@ -14,37 +15,42 @@ class ReceivedOffers extends React.Component {
   }
 
   render() {
+    const { offers } = this.props
     return (
       <div className="container">
         <div className="content-wrapper">
           <h1 className="title">Received Offers</h1>
           <div className="columns">
-            <div className="column is-one-third">
-              { /* <ServiceItem
-                noButton
-                className="offer-card"
-                service={o.service}>
-                <div className="tag is-large">
-                  {o.status}
-                </div>
-                <hr />
-                <div className="service-offer">
-                  <div>
-                    <span className="label">From User:</span> {o.toUser.fullName}
+            { offers.map(offer => (
+              <div 
+                key={offer.id}
+                className="column is-one-third">
+                <ServiceItem
+                  noButton
+                  className="offer-card"
+                  service={offer.service}>
+                  <div className="tag is-large">
+                    {offer.status}
                   </div>
-                  <div>
-                    <span className="label">Note:</span> {o.note}
+                  <hr />
+                  <div className="service-offer">
+                    <div>
+                      <span className="label">From User:</span> {offer.toUser.fullName}
+                    </div>
+                    <div>
+                      <span className="label">Note:</span> {offer.note}
+                    </div>
+                    <div>
+                      <span className="label">Price:</span> ${offer.price}
+                    </div>
+                    <div>
+                      <span className="label">Time:</span> {offer.time} hours
+                    </div>
                   </div>
-                  <div>
-                    <span className="label">Price:</span> ${o.price}
-                  </div>
-                  <div>
-                    <span className="label">Time:</span> {o.time} hours
-                  </div>
-                </div>
-              </ServiceItem>
-              */ }
-            </div>
+                </ServiceItem>
+              </div>
+              ))
+            }
           </div>
         </div>
       </div>
@@ -52,7 +58,19 @@ class ReceivedOffers extends React.Component {
   }
 }
 
-export default withAuthorization(ReceivedOffers)
+const mapStateToProps = ({offers}) => ({ offers: offers.received })
+
+export default 
+  withAuthorization(
+    connect(mapStateToProps)(ReceivedOffers))
+
+
+
+
+
+
+
+
 
 
 
