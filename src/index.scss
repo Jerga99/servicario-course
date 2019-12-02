@@ -30,6 +30,10 @@ $border-grey: #ccc;
 $muted-grey: #999;
 $section-grey: #fbfbfb;
 
+.s-m-r {
+  margin-right: 5px;
+}
+
 @import './styles/auth.scss';
 @import './styles/services.scss';
 
