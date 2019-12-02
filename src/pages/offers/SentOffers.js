@@ -4,8 +4,14 @@ import React from 'react'
 import withAuthorization from 'components/hoc/withAuthorization'
 import ServiceItem from 'components/service/ServiceItem'
 
+import { fetchSentOffers } from 'actions'
+
 class SentOffers extends React.Component {
 
+  componentDidMount() {
+    const { auth } = this.props
+    this.props.dispatch(fetchSentOffers(auth.user.uid))
+  }
 
   render() {
     return (

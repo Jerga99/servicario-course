@@ -4,8 +4,14 @@ import React from 'react'
 import withAuthorization from 'components/hoc/withAuthorization'
 import ServiceItem from 'components/service/ServiceItem'
 
+import { fetchReceivedOffers } from 'actions'
+
 class ReceivedOffers extends React.Component {
 
+  componentDidMount() {
+    const { auth } = this.props
+    this.props.dispatch(fetchReceivedOffers(auth.user.uid))
+  }
 
   render() {
     return (
