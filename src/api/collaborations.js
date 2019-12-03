@@ -33,6 +33,13 @@ export const markMessageAsRead = message =>
     .update({isRead: true})
 
 
+export const fetchCollaborations = userId => 
+  db.collection('collaborations')
+    .where('allowedPeople', 'array-contains', userId)
+    .get()
+    .then(snapshot => snapshot.docs.map(doc => ({id: doc.id, ...doc.data()})))
+
+
 
 
 
