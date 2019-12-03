@@ -18,6 +18,7 @@ import SentOffersPage from './pages/offers/SentOffers'
 import ReceivedOffersPage from './pages/offers/ReceivedOffers'
 
 import ReceivedCollaborationsPage from './pages/collaborations/ReceivedCollaborations'
+import CollaborationDetailPage from './pages/collaborations/CollaborationDetail'
 
 const Routes = () => 
   <Switch>
@@ -32,6 +33,9 @@ const Routes = () =>
     </Route>
     <Route path="/collaborations/me">
       <ReceivedCollaborationsPage />
+    </Route>
+    <Route path="/collaborations/:id">
+      <CollaborationDetailPage />
     </Route>
     <Route path="/offers/sent">
       <SentOffersPage />
