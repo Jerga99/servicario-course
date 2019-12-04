@@ -5,7 +5,8 @@ import {
   FETCH_USER_MESSAGES_SUCCESS,
   SET_COLLABORATION,
   SET_COLLABORATION_JOINED_PEOPLE,
-  UPDATE_COLLABORATION_USER } from 'types'
+  UPDATE_COLLABORATION_USER,
+  SET_COLLABORATION_MESSAGES } from 'types'
 import * as api from 'api'
 
 export const collaborate = ({collaboration, message}) => dispatch =>
@@ -63,6 +64,14 @@ export const leaveCollaboration = (collabId, userId) =>
 export const subToProfile = uid => dispatch =>
   api.subToProfile(uid, user => 
     dispatch({type: UPDATE_COLLABORATION_USER, user}))
+
+
+export const sendChatMessage = message => api.sendChatMessage(message)
+
+export const subToMessages = collabId => dispatch =>
+  api.subToMessages(collabId, messages => {
+    dispatch({type: SET_COLLABORATION_MESSAGES, messages})
+  })
 
 
 

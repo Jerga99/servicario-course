@@ -7,7 +7,9 @@ import {
   subToCollaboration, 
   joinCollaboration,
   leaveCollaboration,
-  subToProfile } from 'actions'
+  subToProfile,
+  sendChatMessage,
+  subToMessages } from 'actions'
 import JoinedPeople from 'components/collaboration/JoinedPeople'
 
 class CollaborationDetail extends React.Component {
@@ -22,6 +24,7 @@ class CollaborationDetail extends React.Component {
 
     joinCollaboration(id, user.uid)
     this.watchCollabChanges(id)
+    this.watchMessagesChanges(id)
   }
 
   watchCollabChanges = id => {
@@ -36,6 +39,10 @@ class CollaborationDetail extends React.Component {
     ids.forEach(id => {
       this.peopleWatchers[id] = this.props.subToProfile(id)
     })
+  }
+
+  watchMessagesChanges = collabId => {
+    this.unsubscribeFromMessages = this.props.subToMessages(collabId)
   }
 
   onKeyboardPress = (e) => {
@@ -59,14 +66,16 @@ class CollaborationDetail extends React.Component {
       content: inputValue.trim()
     }
 
-    alert(`Seding message: ${JSON.stringify(message)}`)
-    this.setState({inputValue: ''})
+    sendChatMessage({message, collabId: collaboration.id, timestamp})
+      .then(_ => this.setState({inputValue: ''}))
   }
 
   componentWillUnmount() {
     const { id } = this.props.match.params
     const { user } = this.props.auth
+
     this.unsubscribeFromCollab()
+    this.unsubscribeFromMessages()
 
     Object.keys(this.peopleWatchers)
       .forEach(uid => this.peopleWatchers[uid]())
@@ -130,7 +139,8 @@ class CollaborationDetail extends React.Component {
 
 const mapDispatchToProps = () => ({
   subToCollaboration,
-  subToProfile
+  subToProfile,
+  subToMessages
 })
 
 const mapStateToProps = state => {
