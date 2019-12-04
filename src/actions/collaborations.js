@@ -2,7 +2,9 @@
 
 import { 
   COLLABORATION_CREATED_FROM_OFFER, 
-  FETCH_USER_MESSAGES_SUCCESS } from 'types'
+  FETCH_USER_MESSAGES_SUCCESS,
+  SET_COLLABORATION,
+  SET_COLLABORATION_JOINED_PEOPLE } from 'types'
 import * as api from 'api'
 
 export const collaborate = ({collaboration, message}) => dispatch =>
@@ -33,6 +35,22 @@ export const markMessageAsRead = message => api.markMessageAsRead(message)
 
 export const fetchCollaborations = userId => api.fetchCollaborations(userId)
 
+export const subToCollaboration = collabId => dispatch =>
+  api.subToCollaboration(collabId, async collaboration => {
+    let joinedPeople = []
+
+    if (collaboration.joinedPeople) {
+      joinedPeople = await Promise.all(
+        collaboration.joinedPeople.map(async userRef => {
+          const userSnapshot = await userRef.get()
+          return {id: userSnapshot.id, ...userSnapshot.data()}
+        })
+      )
+    }
+
+    dispatch({type: SET_COLLABORATION, collaboration})
+    dispatch({type: SET_COLLABORATION_JOINED_PEOPLE, joinedPeople})
+  })
 
 
 

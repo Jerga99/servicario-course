@@ -40,6 +40,17 @@ export const fetchCollaborations = userId =>
     .then(snapshot => snapshot.docs.map(doc => ({id: doc.id, ...doc.data()})))
 
 
+export const subToCollaboration = (collabId, done) =>
+  db.collection('collaborations')
+    .doc(collabId)
+    .onSnapshot(snapshot => {
+      const collab = {id: snapshot.id, ...snapshot.data()}
+      done(collab)
+    })
+
+
+
+
 
 
 
