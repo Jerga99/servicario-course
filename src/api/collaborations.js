@@ -59,6 +59,15 @@ export const joinCollaboration = (collabId, uid) => {
 }
 
 
+export const subToProfile = (uid, done) => 
+  db.collection('profiles')
+    .doc(uid)
+    .onSnapshot(snapshot => {
+      const user = {id: snapshot.id, ...snapshot.data()}
+      done(user)
+    })
+
+
 
 
 
