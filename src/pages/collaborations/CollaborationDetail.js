@@ -25,7 +25,7 @@ class CollaborationDetail extends React.Component {
   watchJoinedPeopleChanges = ids => {
     this.peopleWatchers = {}
     ids.forEach(id => {
-      this.peopleWatchers[id] = subToProfile(id)
+      this.peopleWatchers[id] = this.props.subToProfile(id)
     })
   }
 
@@ -83,7 +83,8 @@ class CollaborationDetail extends React.Component {
 }
 
 const mapDispatchToProps = () => ({
-  subToCollaboration
+  subToCollaboration,
+  subToProfile
 })
 
 const mapStateToProps = state => {
