@@ -11,6 +11,7 @@ import {
   sendChatMessage,
   subToMessages } from 'actions'
 import JoinedPeople from 'components/collaboration/JoinedPeople'
+import ChatMessages from 'components/collaboration/ChatMessages'
 
 class CollaborationDetail extends React.Component {
 
@@ -84,13 +85,13 @@ class CollaborationDetail extends React.Component {
   }
 
   render() {
-    const { collaboration, joinedPeople } = this.props
+    const { collaboration, joinedPeople, messages } = this.props
     const { inputValue } = this.state
+    const { user } = this.props.auth
 
     return (
        <div className="content-wrapper">
         <div className="root">
-          <h1 className="title">{ collaboration.title }</h1>
           <div className="body">
             <div className="viewListUser">
               <JoinedPeople users={joinedPeople} />
@@ -99,21 +100,12 @@ class CollaborationDetail extends React.Component {
               <div className="viewChatBoard">
                 <div className="headerChatBoard">
                   <img className="viewAvatarItem" src="https://i.imgur.com/cVDadwb.png" alt="icon avatar" />
-                  <span className="textHeaderChatBoard">Filip Jerga</span>
+                  <span className="textHeaderChatBoard">{user.fullName}</span>
                 </div>
                 <div className="viewListContentChat">
-                  <div className="viewWrapItemLeft">
-                    <div className="viewWrapItemLeft3">
-                      <img src="https://i.imgur.com/cVDadwb.png" alt="avatar" className="peerAvatarLeft" />
-                      <div className="viewItemLeft">
-                        <span className="textContentItem">hey</span>
-                      </div>
-                    </div>
-                    <span className="textTimeLeft">Oct 31, 2019</span>
-                  </div>
-                  <div className="viewItemRight">
-                    <span className="textContentItem">hey</span>
-                  </div>
+                  <ChatMessages 
+                    authUser={user}
+                    messages={messages} />
                   <div style={{float: "left", clear: "both"}}></div>
                 </div>
                 <div className="viewBottom">
@@ -143,10 +135,11 @@ const mapDispatchToProps = () => ({
   subToMessages
 })
 
-const mapStateToProps = state => {
+const mapStateToProps = ({collaboration}) => {
   return {
-    collaboration: state.collaboration.joined,
-    joinedPeople: state.collaboration.joinedPeople
+    collaboration: collaboration.joined,
+    joinedPeople: collaboration.joinedPeople,
+    messages: collaboration.messages
   }
 }
 

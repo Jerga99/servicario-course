@@ -45,7 +45,7 @@ const initCollab = () => {
         const newMessages = [...state]
 
         action.messages.forEach(change => {
-          if (change.type = 'added') {
+          if (change.type === 'added') {
             newMessages.push({id: change.doc.id, ...change.doc.data()})
           }
         })
