@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import withAuthorization from 'components/hoc/withAuthorization'
 import { withRouter } from 'react-router-dom'
+import moment from 'moment'
 import { 
   subToCollaboration, 
   joinCollaboration,
@@ -10,6 +11,10 @@ import {
 import JoinedPeople from 'components/collaboration/JoinedPeople'
 
 class CollaborationDetail extends React.Component {
+
+  state = {
+    inputValue: ''
+  }
 
   componentDidMount() {
     const { id } = this.props.match.params
@@ -33,6 +38,31 @@ class CollaborationDetail extends React.Component {
     })
   }
 
+  onKeyboardPress = (e) => {
+    if (e.key === 'Enter') { this.onSendMessage(this.state.inputValue) }
+  }
+
+  onSendMessage = inputValue => {
+    if (inputValue.trim() === '') { return }
+
+    const timestamp = moment().valueOf().toString()
+    const { user } = this.props.auth
+    const { collaboration } = this.props
+
+    const message = {
+      user: {
+        uid: user.uid,
+        avatar: user.avatar,
+        name: user.fullName
+      },
+      timestamp: parseInt(timestamp, 10),
+      content: inputValue.trim()
+    }
+
+    alert(`Seding message: ${JSON.stringify(message)}`)
+    this.setState({inputValue: ''})
+  }
+
   componentWillUnmount() {
     const { id } = this.props.match.params
     const { user } = this.props.auth
@@ -46,6 +76,8 @@ class CollaborationDetail extends React.Component {
 
   render() {
     const { collaboration, joinedPeople } = this.props
+    const { inputValue } = this.state
+
     return (
        <div className="content-wrapper">
         <div className="root">
@@ -77,9 +109,15 @@ class CollaborationDetail extends React.Component {
                 </div>
                 <div className="viewBottom">
                   <input 
-                    onChange={() => {}}
+                    onChange={(e) => this.setState({inputValue: e.target.value})}
+                    onKeyPress={this.onKeyboardPress}
+                    value={inputValue}
                     className="viewInput" 
                     placeholder="Type your message..." />
+                  <button 
+                    onClick={() => this.onSendMessage(inputValue)}
+                    className="button is-primary is-large">Send
+                  </button>
                 </div>
               </div>
             </div>
