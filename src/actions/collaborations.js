@@ -52,6 +52,7 @@ export const subToCollaboration = collabId => dispatch =>
     dispatch({type: SET_COLLABORATION_JOINED_PEOPLE, joinedPeople})
   })
 
+export const joinCollaboration = (collabId, userId) => api.joinCollaboration(collabId, userId)
 
 
 

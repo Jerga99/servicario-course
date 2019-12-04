@@ -2,12 +2,16 @@ import React from 'react'
 import { connect } from 'react-redux'
 import withAuthorization from 'components/hoc/withAuthorization'
 import { withRouter } from 'react-router-dom'
-import { subToCollaboration } from 'actions'
+import { subToCollaboration, joinCollaboration } from 'actions'
+import JoinedPeople from 'components/collaboration/JoinedPeople'
 
 class CollaborationDetail extends React.Component {
 
   componentDidMount() {
     const { id } = this.props.match.params
+    const { user } = this.props.auth
+
+    joinCollaboration(id, user.uid)
     this.watchCollabChanges(id)
   }
 
@@ -27,20 +31,7 @@ class CollaborationDetail extends React.Component {
           <h1 className="title">{ collaboration.title }</h1>
           <div className="body">
             <div className="viewListUser">
-              <div
-                className="viewWrapItem">
-                <img
-                    className="viewAvatarItem"
-                    src="https://i.imgur.com/cVDadwb.png"
-                    alt="icon avatar"
-                />
-                <div className="viewWrapContentItem">
-                  <span className="textItem">Nickname: Filip Jerga
-                  </span>
-                  <span className="textItem">online
-                  </span>
-                </div>
-              </div>
+              <JoinedPeople users={joinedPeople} />
             </div>
             <div className="viewBoard">
               <div className="viewChatBoard">

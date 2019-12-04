@@ -1,7 +1,7 @@
 
-
+import firebase from 'firebase/app'
 import db from 'db'
-
+import { createRef } from './index'
 
 export const createCollaboration = collab => 
   db.collection('collaborations')
@@ -49,6 +49,14 @@ export const subToCollaboration = (collabId, done) =>
     })
 
 
+export const joinCollaboration = (collabId, uid) => {
+  const userRef = createRef('profiles', uid)
+
+  return db
+    .collection('collaborations')
+    .doc(collabId)
+    .update({ joinedPeople: firebase.firestore.FieldValue.arrayUnion(userRef)})
+}
 
 
 
