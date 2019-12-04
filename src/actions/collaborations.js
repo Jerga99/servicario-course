@@ -54,8 +54,11 @@ export const subToCollaboration = (collabId, done) => dispatch =>
     done({joinedPeople})
   })
 
-export const joinCollaboration = (collabId, userId) => api.joinCollaboration(collabId, userId)
+export const joinCollaboration = (collabId, userId) => 
+  api.joinCollaboration(collabId, userId)
 
+export const leaveCollaboration = (collabId, userId) =>
+ api.leaveCollaboration(collabId, userId)
 
 export const subToProfile = uid => dispatch =>
   api.subToProfile(uid, user => 

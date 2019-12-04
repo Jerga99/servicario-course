@@ -2,7 +2,11 @@ import React from 'react'
 import { connect } from 'react-redux'
 import withAuthorization from 'components/hoc/withAuthorization'
 import { withRouter } from 'react-router-dom'
-import { subToCollaboration, joinCollaboration, subToProfile } from 'actions'
+import { 
+  subToCollaboration, 
+  joinCollaboration,
+  leaveCollaboration,
+  subToProfile } from 'actions'
 import JoinedPeople from 'components/collaboration/JoinedPeople'
 
 class CollaborationDetail extends React.Component {
@@ -30,10 +34,14 @@ class CollaborationDetail extends React.Component {
   }
 
   componentWillUnmount() {
+    const { id } = this.props.match.params
+    const { user } = this.props.auth
     this.unsubscribeFromCollab()
 
     Object.keys(this.peopleWatchers)
       .forEach(uid => this.peopleWatchers[uid]())
+
+    leaveCollaboration(id, user.uid)
   }
 
   render() {
