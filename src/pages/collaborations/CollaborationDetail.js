@@ -71,6 +71,10 @@ class CollaborationDetail extends React.Component {
       .then(_ => this.setState({inputValue: ''}))
   }
 
+  onStartCollaboration = (collaboration) => {
+    alert(`Starting collaboration: ${collaboration.title}`)
+  }
+
   componentWillUnmount() {
     const { id } = this.props.match.params
     const { user } = this.props.auth
@@ -99,8 +103,15 @@ class CollaborationDetail extends React.Component {
             <div className="viewBoard">
               <div className="viewChatBoard">
                 <div className="headerChatBoard">
-                  <img className="viewAvatarItem" src="https://i.imgur.com/cVDadwb.png" alt="icon avatar" />
-                  <span className="textHeaderChatBoard">{user.fullName}</span>
+                  <div className="headerChatUser">
+                    <img className="viewAvatarItem" src="https://i.imgur.com/cVDadwb.png" alt="icon avatar" />
+                    <span className="textHeaderChatBoard">{user.fullName}</span>
+                  </div>
+                  <div className="headerChatButton">
+                    <button 
+                      onClick={() => this.onStartCollaboration(collaboration)}
+                      className="button is-success">Start Collaboration</button>
+                  </div>
                 </div>
                 <div className="viewListContentChat">
                   <ChatMessages 
