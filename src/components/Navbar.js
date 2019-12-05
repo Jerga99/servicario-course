@@ -66,7 +66,7 @@ const Navbar = props => {
           </div>
 
           <div className="navbar-end">
-            { user &&
+            { user.uid &&
               <div className="navbar-item is-secondary user-welcome">
                 {`Hi ${user.fullName}`}
               </div>
@@ -75,11 +75,6 @@ const Navbar = props => {
               to="/" 
               className="navbar-item is-secondary">
                 Home
-            </Link>
-            <Link 
-              to="/services" 
-              className="navbar-item is-secondary">
-                Services
             </Link>
             <Link 
               to="/faq" 
