@@ -16,7 +16,7 @@ const Timer = ({seconds, timeOutCallback}) => {
     }, 1000)
 
     return () => clearInterval(intervalId)
-  }, [secondsLeft])
+  }, [secondsLeft, timeOutCallback])
 
   return (
     <div className="timer">
