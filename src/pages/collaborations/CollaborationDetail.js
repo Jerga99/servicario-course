@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import withAuthorization from 'components/hoc/withAuthorization'
 import { withRouter } from 'react-router-dom'
+import { Timestamp } from 'db'
 import moment from 'moment'
 import { 
   subToCollaboration, 
@@ -9,9 +10,11 @@ import {
   leaveCollaboration,
   subToProfile,
   sendChatMessage,
-  subToMessages } from 'actions'
+  subToMessages,
+  startCollaboration } from 'actions'
 import JoinedPeople from 'components/collaboration/JoinedPeople'
 import ChatMessages from 'components/collaboration/ChatMessages'
+import Timer from 'components/collaboration/Timer'
 
 class CollaborationDetail extends React.Component {
 
@@ -71,8 +74,12 @@ class CollaborationDetail extends React.Component {
       .then(_ => this.setState({inputValue: ''}))
   }
 
-  onStartCollaboration = (collaboration) => {
-    alert(`Starting collaboration: ${collaboration.title}`)
+  onStartCollaboration = collaboration => {
+    const { id, time } = collaboration
+    const nowSeconds = Timestamp.now().seconds
+
+    const expiresAt = new Timestamp(nowSeconds + time, 0)
+    startCollaboration(id, expiresAt)
   }
 
   componentWillUnmount() {
@@ -107,11 +114,16 @@ class CollaborationDetail extends React.Component {
                     <img className="viewAvatarItem" src="https://i.imgur.com/cVDadwb.png" alt="icon avatar" />
                     <span className="textHeaderChatBoard">{user.fullName}</span>
                   </div>
-                  <div className="headerChatButton">
-                    <button 
-                      onClick={() => this.onStartCollaboration(collaboration)}
-                      className="button is-success">Start Collaboration</button>
-                  </div>
+                  { false &&
+                    <div className="headerChatButton">
+                      <button 
+                        onClick={() => this.onStartCollaboration(collaboration)}
+                        className="button is-success">Start Collaboration</button>
+                    </div>
+                  }
+                  { true &&
+                    <Timer />
+                  }
                 </div>
                 <div className="viewListContentChat">
                   <ChatMessages 
