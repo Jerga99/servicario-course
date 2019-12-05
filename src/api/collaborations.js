@@ -90,10 +90,11 @@ export const subToMessages = (collabId, done) =>
     .onSnapshot(snapshot => done(snapshot.docChanges()))
 
 
-export const startCollaboration = (collabId, expiresAt) =>
+export const startCollaboration = (collabId, expiresAt) => 
   db.collection('collaborations')
     .doc(collabId)
     .update({expiresAt})
+
 
 
 
