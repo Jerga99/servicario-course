@@ -8,17 +8,34 @@ service cloud.firestore {
     
     match /services/{serviceId} {
       allow read: if true;
-      allow write: if signedIn();
+      allow write: if signedIn() &&
+        request.resource.data.category is string &&
+        request.resource.data.category in ['mathematics', 'programming', 'painting', 'singing', 'english'] &&
+        request.resource.data.title is string &&
+        request.resource.data.title.size() > 10 &&
+        request.resource.data.description is string &&
+        request.resource.data.description.size() > 50 &&
+        request.resource.data.image is string &&
+        request.resource.data.price is number &&
+        request.resource.data.price > 5;
     }
     
     match /collaborations/{collabId} {
       allow read: if signedIn();
       allow write: if signedIn();
+      
+      match /messages/{messageId} {
+        allow read, write: if signedIn();
+      }
     }
     
     match /profiles/{profileId} {
       allow read: if true;
       allow write: if signedIn();
+      
+      match /messages/{messageId} {
+        allow read, write: if signedIn();
+      }
     }
     
     match /offers/{offerId} {
