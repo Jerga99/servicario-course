@@ -159,13 +159,13 @@ class CollaborationDetail extends React.Component {
                   <input 
                     onChange={(e) => this.setState({inputValue: e.target.value})}
                     onKeyPress={this.onKeyboardPress}
-                    disabled={status === 'finished' || status === 'notStarted'}
+                    // disabled={status === 'finished' || status === 'notStarted'}
                     value={inputValue}
                     className="viewInput" 
                     placeholder="Type your message..." />
                   <button 
                     onClick={() => this.onSendMessage(inputValue)}
-                    disabled={status === 'finished' || status === 'notStarted'}
+                    // disabled={status === 'finished' || status === 'notStarted'}
                     className="button is-primary is-large">Send
                   </button>
                 </div>

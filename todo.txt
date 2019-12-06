@@ -1,0 +1,10 @@
+
+
+
+
+1. Fix messages added to UI after expiration
+2. Handle statuses in collaboration page
+3. Handle logout correctly!
+4. Fix Register redirect, we are calling state after component is unmounted
+5. fix messages after login
+6. Add one more rule to check if user is in allowed collaborators

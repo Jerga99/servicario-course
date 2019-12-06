@@ -25,13 +25,16 @@ service cloud.firestore {
       allow write: if signedIn();
       
       match /messages/{messageId} {
-        allow read, write: if signedIn();
+        allow read: if signedIn();
+        allow write: if signedIn() &&
+          get(/databases/$(database)/documents/collaborations/$(collabId)).data.expiresAt > request.time;
       }
     }
     
     match /profiles/{profileId} {
       allow read: if true;
-      allow write: if signedIn();
+      allow write: if signedIn() &&
+        request.resource.data.uid == request.auth.uid;
       
       match /messages/{messageId} {
         allow read, write: if signedIn();
