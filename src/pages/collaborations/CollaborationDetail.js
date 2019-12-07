@@ -72,8 +72,12 @@ class CollaborationDetail extends React.Component {
       content: inputValue.trim()
     }
 
-    sendChatMessage({message, collabId: collaboration.id, timestamp})
+    this.props.sendChatMessage({message, collabId: collaboration.id, timestamp})
       .then(_ => this.setState({inputValue: ''}))
+      .catch(error => {
+        // this.setState({inputValue: ''})
+        alert(error)
+      })
   }
 
   onStartCollaboration = collaboration => {
@@ -181,7 +185,8 @@ class CollaborationDetail extends React.Component {
 const mapDispatchToProps = () => ({
   subToCollaboration,
   subToProfile,
-  subToMessages
+  subToMessages,
+  sendChatMessage
 })
 
 const mapStateToProps = ({collaboration}) => {
