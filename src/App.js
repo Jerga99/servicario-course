@@ -25,6 +25,10 @@ class App extends React.Component {
         checkUserConnection(authUser.uid)
         this.unsubscribeMessages = store.dispatch(subscribeToMessages(authUser.uid))        
       }
+
+      if (!authUser) { 
+        this.unsubscribeMessages && this.unsubscribeMessages()
+      }
     })
   }
 

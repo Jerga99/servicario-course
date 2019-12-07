@@ -6,8 +6,8 @@ import ReceivedMessages from './ReceivedMessages'
 
 const Navbar = props => {
 
-  const { user, isAuth } = props.auth
-  const { logout, loadFresh } = props
+  const { user, isAuth, messages } = props.auth
+  const { loadFresh } = props
 
   useEffect(() => {
     if (!loadFresh) { return }
@@ -66,7 +66,7 @@ const Navbar = props => {
           </div>
 
           <div className="navbar-end">
-            { user.uid &&
+            { isAuth &&
               <div className="navbar-item is-secondary user-welcome">
                 {`Hi ${user.fullName}`}
               </div>
@@ -120,7 +120,7 @@ const Navbar = props => {
                       Messages
                   </a>
                   <div className="navbar-dropdown navbar-dropdown-messages">
-                    { user.messages && <ReceivedMessages /> }
+                    { messages && <ReceivedMessages /> }
                   </div>
                 </div>
               </React.Fragment>
@@ -142,13 +142,13 @@ const Navbar = props => {
               </React.Fragment>
             }
             { isAuth &&
-              <div 
-                onClick={logout}
+              <Link 
+                to="/logout"
                 className="navbar-item">
                 <span className="button signup-button is-danger rounded raised">
                     Logout
                 </span>
-              </div>
+              </Link>
             }
           </div>
         </div>
