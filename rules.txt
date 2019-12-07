@@ -6,6 +6,12 @@ service cloud.firestore {
       return request.auth.uid != null;
     }
     
+    function canCreateMessage(collaboration) {
+      return signedIn() &&
+          collaboration.expiresAt > request.time &&
+          request.auth.uid in collaboration.allowedPeople;
+    }
+    
     match /services/{serviceId} {
       allow read: if true;
       allow write: if signedIn() &&
@@ -21,14 +27,15 @@ service cloud.firestore {
     }
     
     match /collaborations/{collabId} {
-      allow read: if signedIn();
+      allow read: 
+        if signedIn() &&
+           request.auth.uid in resource.data.allowedPeople;
       allow write: if signedIn();
       
       match /messages/{messageId} {
         allow read: if signedIn();
-        allow write: if signedIn() &&
-          get(/databases/$(database)/documents/collaborations/$(collabId)).data.expiresAt > request.time;
-      }
+        allow write: if canCreateMessage(get(/databases/$(database)/documents/collaborations/$(collabId)).data);
+      } 
     }
     
     match /profiles/{profileId} {
