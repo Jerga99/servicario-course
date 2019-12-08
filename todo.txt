@@ -3,7 +3,7 @@
 
 
 1. Fix messages added to UI after expiration // FIXED!!!!
-2. Handle statuses in collaboration page
+2. Handle statuses in collaboration page // FIXED !!!!
 
 
 
