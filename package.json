@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "express": "^4.17.1",
     "firebase": "^7.5.0",
     "moment": "^2.24.0",
     "node-sass": "^4.13.0",
@@ -15,13 +16,16 @@
     "react-toast-notifications": "^2.4.0",
     "redux": "^4.0.4",
     "redux-logger": "^3.0.6",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "serve-static": "^1.14.1"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start-dev": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "start": "node server.js",
+    "heroku-postbuild": "npm run build" 
   },
   "eslintConfig": {
     "extends": "react-app"
